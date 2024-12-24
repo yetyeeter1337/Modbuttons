@@ -143,7 +143,7 @@ class button {
   }
 }
 
-function saveButtonStatus(){ // returns an array that can be used in the following function
+p5.prototype.saveButtonStatus = function(){ // returns an array that can be used in the following function
     let status = []
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
@@ -152,7 +152,9 @@ function saveButtonStatus(){ // returns an array that can be used in the followi
     return status
 }
 
-function loadButtonStatus(status){
+
+
+p5.prototype.loadButtonStatus = function(status){
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
         button.hidden = status[i][0]
@@ -160,7 +162,9 @@ function loadButtonStatus(status){
     }
 }
 
-function disableAllButtons(){
+
+
+p5.prototype.disableAllButtons = function(){
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
         button.disable()
