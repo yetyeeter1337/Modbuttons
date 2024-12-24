@@ -2,7 +2,7 @@
 // now better in every way!
 // (theres definitely better ones, but the old one sucked)
 
-let buttons = []
+p5.prototype.buttons = []
 
 class button {
   constructor (type, x, y){
@@ -32,7 +32,7 @@ class button {
     this.stroke = [0,0,0]
     this.strokeWeight = 1
     
-    buttons.push(this)
+    p5.prototype.buttons.push(this)
     
     
   }
@@ -145,30 +145,30 @@ class button {
 
 function saveButtonStatus(){ // returns an array that can be used in the following function
     let status = []
-    for(let i = 0; i < buttons.length; i++){
-        let button = buttons[i]
+    for(let i = 0; i < p5.prototype.buttons.length; i++){
+        let button = p5.prototype.buttons[i]
         status[i] = [button.hidden, button.enabled]
     }
     return status
 }
 
 function loadButtonStatus(status){
-    for(let i = 0; i < buttons.length; i++){
-        let button = buttons[i]
+    for(let i = 0; i < p5.prototype.buttons.length; i++){
+        let button = p5.prototype.buttons[i]
         button.hidden = status[i][0]
         button.active = status[i][1]
     }
 }
 
 function disableAllButtons(){
-    for(let i = 0; i < buttons.length; i++){
-        let button = buttons[i]
+    for(let i = 0; i < p5.prototype.buttons.length; i++){
+        let button = p5.prototype.buttons[i]
         button.disable()
     }
 }
 
-function updateButtons(){
-  for(let button of buttons){
+p5.prototype.updateButtons = function(){
+  for(let button of p5.prototype.buttons){
     if(!button.updated) button.update()
     button.updated = false
     
@@ -468,178 +468,12 @@ class dial extends button{
   }
 }
 
-let testDial = new dial(true, 400, 300)
 
-testDial.radius = 25
-
-testDial.segments = 8
-
-testDial.minAngle = 135
-testDial.maxAngle = 225
-
-
-let testSlider = new slider("circle", false, 100, 300)
-
-testSlider.smooth = false
-testSlider.segments = 6
-testSlider.Slength = 150
-
-let testButton = new button("box", 200, 175)
-testButton.width = 200
-testButton.height = 50
-
-testButton.cornerSize = 20
-testButton.cornerDistance = 0
-testButton.shrink = 0
-
-testButton.Pdist = 0
-testButton.Pshrink = 0
-
-testButton.col1 = [0,230,180]
-testButton.col2 = [0,30,30]
-
-
-testButton.stroke = [0,230,180]
-testButton.strokeWeight = 2
-testButton.fill = testButton.col1
-
-testButton.Pfill = testButton.fill
-testButton.Pstroke = testButton.stroke
-
-testButton.text = "INITIALIZE"
-testButton.textSize = 20
-testButton.textColor = testButton.col2
-testButton.PtextColor = testButton.col2
-
-
-
-testButton.render = function(){
-  
-  // animations
-  let Ptimer = this.timeSincePressedChange
-  let Htimer = min(this.timeSinceHoverChange, Ptimer)
-  
-  if(this.hover && !this.pressed){ // when hovered over
-    this.cornerDistance = Clerp(this.Pdist, 10, sin(min(Htimer*2,1)*PI/2))
-    this.shrink = Clerp(this.Pshrink, 3, Htimer*5)
-    this.fill = ClerpColor(this.Pfill, this.col2, Htimer*5)
-    this.textColor = ClerpColor(this.PtextColor, this.col1, Htimer*5)
-  }else if(this.pressed){ // when clicked
-    this.cornerDistance = Clerp(this.Pdist, 15, sin(min(Ptimer*4,1)*PI/2))
-    this.shrink = Clerp(this.Pshrink, 5, Ptimer*5)
-    this.fill = ClerpColor(this.Pfill, this.col1, Ptimer*5)
-    this.textColor = ClerpColor(this.PtextColor, this.col2, Htimer*5)
-  }else{ // when not hovered or clicked
-    this.cornerDistance = Clerp(this.Pdist, 0, sin(min(Htimer*2,1)*PI/2))
-    this.shrink = Clerp(this.Pshrink, 0, Htimer*5)
-    this.fill = ClerpColor(this.Pfill, this.col1, Htimer*5)
-    this.textColor = ClerpColor(this.PtextColor, this.col2, Htimer*5)
-  }
-  
-  
-  fill(this.fill)
-  stroke(this.fill)
-  rect(this.x + this.shrink, this.y + this.shrink, this.width - 2*this.shrink, this.height - 2*this.shrink)
-  
-  textAlign(CENTER,CENTER)
-  noStroke()
-  fill(this.textColor)
-  textSize(this.textSize)
-  text(this.text,this.x + this.shrink, this.y + this.shrink, this.width - 2*this.shrink, this.height - 2*this.shrink)
-  
-  let x = this.x
-  let y = this.y
-  let w = this.width
-  let h = this.height
-  let d = this.cornerDistance
-  let s = this.cornerSize
-  
-  stroke(this.stroke)
-  strokeWeight(this.strokeWeight)
-  
-  // top left corner
-  line(x - d, y - d, x - d + s, y - d)
-  line(x - d, y - d, x - d, y - d + s)
-  
-  // top right corner
-  line(x + w + d, y - d, x + w + d - s, y - d)
-  line(x + w + d, y - d, x + w + d, y - d + s)
-  
-  // bottom left corner
-  line(x - d, y + h + d, x - d + s, y + h + d)
-  line(x - d, y + h + d, x - d, y + h + d - s)
-  
-  // bottom right corner
-  line(x + w + d, y + h + d, x + w + d - s, y + h + d)
-  line(x + w + d, y + h + d, x + w + d, y + h + d - s)
-}
-
-testButton.onHoverBegin = function(){
-  this.Pdist = this.cornerDistance
-  this.Pshrink = this.shrink
-  this.Pfill = this.fill
-  this.PtextColor = this.textColor
-  cursor(HAND)
-}
-
-testButton.onPressBegin = function(){
-  this.Pdist = this.cornerDistance
-  this.Pshrink = this.shrink
-  this.Pfill = this.fill
-  this.PtextColor = this.textColor
-}
-
-testButton.onPressEnd = function(){
-  this.Pdist = this.cornerDistance
-  this.Pshrink = this.shrink
-  this.Pfill = this.fill
-  this.PtextColor = this.textColor
-}
-
-testButton.onHoverEnd = function(){
-  this.Pdist = this.cornerDistance
-  this.Pshrink = this.shrink
-  this.Pfill = this.fill
-  this.PtextColor = this.textColor
-  cursor()
-}
-
-let col1 = [0,230,180]
-let col2 = [0,30,30]
-
-
-let time = 0
-
-
-function Clerp(a, b, l){
+p5.prototype.Clerp = function(a, b, l){
   return lerp(a,b,min(1,max(0, l)))
 }
 
-function ClerpColor(col1, col2, l){
+p5.prototype.ClerpColor = function(col1, col2, l){
   return lerpColor(color(col1),color(col2),min(1,max(0, l)))
 }
-
-function setup() {
-  createCanvas(600, 400);
-  
-}
-
-function draw() {
-  background(0,10,10);
-  
-  noStroke()
-  fill(255)
-  
-  textSize(12)
-  textAlign(LEFT,TOP)
-  text("button Pressed: " + testButton.pressed, 10,10)
-  text("button Hovered: " + testButton.hover, 10,20)
-  text("time since pressed change: " + round(testButton.timeSincePressedChange,3), 10,30)
-  text("time since hover change: " + round(testButton.timeSinceHoverChange,3), 10,40)
-  
-  text("dial value: " + round(testDial.value), 10,60)
-  
-  
-  
-  updateButtons()
 }
