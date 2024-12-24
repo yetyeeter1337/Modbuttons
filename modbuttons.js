@@ -4,7 +4,7 @@
 
 p5.prototype.buttons = []
 
-class button {
+class Button {
   constructor (type, x, y){
     
     this.pressed = false
@@ -143,7 +143,7 @@ class button {
   }
 }
 
-p5.prototype.saveButtonStatus = function(){ // returns an array that can be used in the following function
+function saveButtonStatus(){ // returns an array that can be used in the following function
     let status = []
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
@@ -152,9 +152,7 @@ p5.prototype.saveButtonStatus = function(){ // returns an array that can be used
     return status
 }
 
-
-
-p5.prototype.loadButtonStatus = function(status){
+function loadButtonStatus(status){
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
         button.hidden = status[i][0]
@@ -162,9 +160,7 @@ p5.prototype.loadButtonStatus = function(status){
     }
 }
 
-
-
-p5.prototype.disableAllButtons = function(){
+function disableAllButtons(){
     for(let i = 0; i < p5.prototype.buttons.length; i++){
         let button = p5.prototype.buttons[i]
         button.disable()
@@ -183,7 +179,7 @@ p5.prototype.updateButtons = function(){
 }
 
 
-class slider extends button{
+class Slider extends Button{
     constructor(type,vertical, x, y){
       super(type,x,y)
       
@@ -346,7 +342,7 @@ class slider extends button{
 }
 
 
-class dial extends button{
+class Dial extends Button{
   constructor(continuous,x,y){
     super("circle",x,y)
     this.value = 0
@@ -471,7 +467,6 @@ class dial extends button{
     
   }
 }
-
 
 p5.prototype.Clerp = function(a, b, l){
   return lerp(a,b,min(1,max(0, l)))
