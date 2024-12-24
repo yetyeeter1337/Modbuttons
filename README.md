@@ -10,7 +10,7 @@ to use Modbuttons, place the Modbuttons.js in your project and then add the foll
 ```html
   <script src="modbuttons.js"></script>
 ```
-the `updateButtons()` function must be placed in your draw function, preferrably at the end
+the `updateButtons()` function must be placed in your draw function in order for Modbuttons to work, preferrably at the end
 ```js
   function draw() {
     // your code
