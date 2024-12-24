@@ -476,4 +476,5 @@ p5.prototype.Clerp = function(a, b, l){
 p5.prototype.ClerpColor = function(col1, col2, l){
   return lerpColor(color(col1),color(col2),min(1,max(0, l)))
 }
-}
+
+p5.prototype.registerMethod("post",p5.prototype.updateButtons)
