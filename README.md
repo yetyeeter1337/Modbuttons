@@ -10,3 +10,7 @@ to use Modbuttons, place the Modbuttons.js file in your project and then add the
 ```html
   <script src="modbuttons.js"></script>
 ```
+
+## how to use
+
+full documentation can be found on the wiki https://github.com/yetyeeter1337/Modbuttons/wiki
