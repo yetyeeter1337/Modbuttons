@@ -200,28 +200,9 @@ class Slider extends Button{
     }
 
     check(){
-      let ygtv = this
-      ;(()=>{
-        var thos = new Proxy({},{
-        has(_, key){
-          return key in this
-        },
-        get(_, key) {
-          console.error("YOU USED THOS AGAIN YOU DORK")
-          return ygtv[key]
-        },
-        set(_, key, value){
-          console.error("YOU USED THOS AGAIN YOU DORK")
-          ygtv[key] = value
-        }
-      })
-        })(this)
-      // unessasary arcane wizardry to berate me whenever I misspell this
-      
       
       let Soffset = this.vertical?(this.smooth?(-this.value):(-(this.value*(this.Slength/this.segments)))):(this.smooth?(this.value):((this.value*(this.Slength/this.segments)))) // yolo
-      
-//poopy woopie fartie warty please work for doc and marty      
+       
         if(this.type == "BOX"){
       
       if(mouseX >= this.x - this.width/2 + (this.vertical?0:Soffset) && mouseY >= this.y - this.height/2 + (this.vertical?Soffset:0)
